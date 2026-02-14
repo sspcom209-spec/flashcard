@@ -7,31 +7,52 @@ export default function CategorySelectionPage() {
   const basePath = isStudy ? '/study' : '/quiz'
 
   return (
-    <main style={{ padding: '2rem', maxWidth: 600, margin: '0 auto' }}>
+    <main style={{ padding: '2rem', margin: '0 auto' }}>
       <h1>{isStudy ? 'Study Mode' : 'Quiz Mode'} — Choose a category</h1>
-      <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        {CATEGORIES.map((cat) => (
-          <li key={cat}>
-            <Link
-              to={`${basePath}/${cat}`}
-              style={{
-                display: 'block',
-                padding: '1rem',
-                background: '#f1f5f9',
-                borderRadius: 8,
-                textDecoration: 'none',
-                color: '#0f172a',
-                textTransform: 'capitalize',
-              }}
-            >
-              {cat}
-            </Link>
-          </li>
-        ))}
+      <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
+        {CATEGORIES.map((cat, i) => {
+          const colors = ['#dc2626', '#16a34a', '#2563eb']
+          const bg = colors[i % colors.length]
+          return (
+            <li key={cat}>
+              <Link
+                to={`${basePath}/${cat}`}
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  maxWidth: 320,
+                  padding: '1rem 1.5rem',
+                  background: bg,
+                  color: 'white',
+                  borderRadius: 8,
+                  textDecoration: 'none',
+                  fontWeight: 600,
+                  textTransform: 'capitalize',
+                }}
+              >
+                {cat}
+              </Link>
+            </li>
+          )
+        })}
       </ul>
-      <Link to="/" style={{ display: 'inline-block', marginTop: '1.5rem', color: '#2563eb' }}>
+      <div style={{ marginTop: '1.5rem' }}>
+      <Link
+        to="/"
+        style={{
+          display: 'inline-block',
+          marginTop: '1.5rem',
+          padding: '0.75rem 1.25rem',
+          background: '#64748b',
+          color: 'white',
+          textDecoration: 'none',
+          borderRadius: 8,
+          fontWeight: 600,
+        }}
+      >
         ← Back to Home
       </Link>
+      </div>
     </main>
   )
 }
