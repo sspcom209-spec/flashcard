@@ -1,60 +1,24 @@
 import { Link } from 'react-router-dom'
+import PageLayout from '../components/PageLayout'
+import { theme, getBlockLinkStyle } from '../theme'
 
+/** Home page: entry point with links to Study, Quiz, and Stats. */
 export default function HomePage() {
   return (
-    <main style={{ padding: '2rem', margin: '0 auto' }}>
+    <PageLayout>
       <h1>Spanish Flashcards</h1>
-      <p>Welcome! Choose how you want to practice.</p>
+      <p>Choose how you want to practice.</p>
       <nav style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginTop: '2rem' }}>
-        <Link
-          to="/study/category"
-          style={{
-            display: 'block',
-            width: '100%',
-            maxWidth: 320,
-            padding: '1rem 1.5rem',
-            background: '#dc2626',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: 8,
-            fontWeight: 600,
-          }}
-        >
+        <Link to="/study/category" style={getBlockLinkStyle(theme.color.study)}>
           Study Mode
         </Link>
-        <Link
-          to="/quiz/category"
-          style={{
-            display: 'block',
-            width: '100%',
-            maxWidth: 320,
-            padding: '1rem 1.5rem',
-            background: '#16a34a',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: 8,
-            fontWeight: 600,
-          }}
-        >
+        <Link to="/quiz/category" style={getBlockLinkStyle(theme.color.quiz)}>
           Quiz Mode
         </Link>
-        <Link
-          to="/stats"
-          style={{
-            display: 'block',
-            width: '100%',
-            maxWidth: 320,
-            padding: '1rem 1.5rem',
-            background: '#2563eb',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: 8,
-            fontWeight: 600,
-          }}
-        >
+        <Link to="/stats" style={getBlockLinkStyle(theme.color.primary)}>
           Stats Page
         </Link>
       </nav>
-    </main>
+    </PageLayout>
   )
 }

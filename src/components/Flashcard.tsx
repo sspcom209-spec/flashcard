@@ -7,6 +7,7 @@ type Props = {
   onFlip: () => void
 }
 
+/** Single flip card: shows Spanish (front) or English (back). Click to flip. */
 export default function Flashcard({ card, flipped, onFlip }: Props) {
   return (
     <button

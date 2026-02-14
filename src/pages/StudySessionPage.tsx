@@ -1,37 +1,34 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { getCardsByCategory, type Flashcard, CATEGORIES, type Category } from '../data/flashcards'
+import { getCardsByCategory, type Flashcard as FlashcardType, CATEGORIES, type Category } from '../data/flashcards'
 import Flashcard from '../components/Flashcard'
+import PageLayout from '../components/PageLayout'
+import { theme, getLinkStyle, getBlockLinkStyle, getButtonStyle } from '../theme'
 
 function isValidCategory(category: string): category is Category {
   return CATEGORIES.includes(category as Category)
 }
 
+/**
+ * Study session: one card at a time, flip to see English, mark Right/Wrong.
+ * Tracks wrong cards for potential redo; shows session complete when done.
+ */
 export default function StudySessionPage() {
   const { category } = useParams<{ category: string }>()
-  const [wrongCards, setWrongCards] = useState<Flashcard[]>([])
+  const [wrongCards, setWrongCards] = useState<FlashcardType[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [flipped, setFlipped] = useState(false)
 
-  const linkButtonStyle = {
-    display: 'inline-block' as const,
-    padding: '0.75rem 1.25rem',
-    color: 'white',
-    textDecoration: 'none' as const,
-    borderRadius: 8,
-    fontWeight: 600,
-  }
-
   if (!category || !isValidCategory(category)) {
     return (
-      <main style={{ padding: '2rem', margin: '0 auto' }}>
+      <PageLayout>
         <p>Invalid category.</p>
         <div style={{ marginTop: '1rem' }}>
-          <Link to="/study/category" style={{ ...linkButtonStyle, background: '#64748b' }}>
+          <Link to="/study/category" style={getLinkStyle(theme.color.neutral)}>
             ← Back to category selection
           </Link>
         </div>
-      </main>
+      </PageLayout>
     )
   }
 
@@ -57,7 +54,7 @@ export default function StudySessionPage() {
 
   if (sessionComplete) {
     return (
-      <main style={{ padding: '2rem', margin: '0 auto' }}>
+      <PageLayout>
         <h1>Session complete</h1>
         <p>
           You reviewed {cards.length} card{cards.length !== 1 ? 's' : ''}.
@@ -66,41 +63,30 @@ export default function StudySessionPage() {
           )}
         </p>
         <nav style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', marginTop: '1.5rem' }}>
-          <Link
-            to="/study/category"
-            style={{
-              display: 'block',
-              width: '100%',
-              maxWidth: 320,
-              padding: '0.75rem 1.25rem',
-              background: '#2563eb',
-              color: 'white',
-              textDecoration: 'none',
-              borderRadius: 8,
-              fontWeight: 600,
-            }}
-          >
+          <Link to="/study/category" style={getBlockLinkStyle(theme.color.primary)}>
             Choose another category
           </Link>
-          <Link to="/" style={{ ...linkButtonStyle, background: '#64748b' }}>
+          <Link to="/" style={getLinkStyle(theme.color.neutral)}>
             ← Back to Home
           </Link>
         </nav>
-      </main>
+      </PageLayout>
     )
   }
 
   return (
-    <main style={{ padding: '2rem', margin: '0 auto' }}>
+    <PageLayout>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1.5rem' }}>
         <h1 style={{ margin: 0 }}>Study — {category}</h1>
-        <span style={{ color: '#64748b' }}>
+        <span style={{ color: theme.color.textMuted }}>
           Card {currentIndex + 1} of {cards.length}
         </span>
       </div>
 
-      <p style={{ marginBottom: '1rem', color: '#64748b', fontSize: '0.9rem' }}>
-        {flipped ? '맞았으면 ✅, 틀렸으면 ❌를 누르거나 다음 카드로 넘어가세요.' : '카드를 클릭하면 영어 뜻을 볼 수 있어요.'}
+      <p style={{ marginBottom: '1rem', color: theme.color.textMuted, fontSize: '0.9rem' }}>
+        {flipped
+          ? 'Tap ✅ if you got it right, ❌ if wrong, or go to next card.'
+          : 'Click the card to reveal the English translation.'}
       </p>
 
       <Flashcard
@@ -120,63 +106,24 @@ export default function StudySessionPage() {
       >
         {flipped && (
           <>
-            <button
-              type="button"
-              onClick={handleRight}
-              style={{
-                padding: '0.75rem 1.5rem',
-                background: '#16a34a',
-                color: 'white',
-                border: 'none',
-                borderRadius: 8,
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontSize: '1rem',
-              }}
-            >
-              ✅ 맞았어요
+            <button type="button" onClick={handleRight} style={getButtonStyle(theme.color.quiz)}>
+              ✅ I got it right
             </button>
-            <button
-              type="button"
-              onClick={handleWrong}
-              style={{
-                padding: '0.75rem 1.5rem',
-                background: '#dc2626',
-                color: 'white',
-                border: 'none',
-                borderRadius: 8,
-                fontWeight: 600,
-                cursor: 'pointer',
-                fontSize: '1rem',
-              }}
-            >
-              ❌ 틀렸어요
+            <button type="button" onClick={handleWrong} style={getButtonStyle(theme.color.study)}>
+              ❌ I got it wrong
             </button>
           </>
         )}
-        <button
-          type="button"
-          onClick={handleNext}
-          style={{
-            padding: '0.75rem 1.5rem',
-            background: '#2563eb',
-            color: 'white',
-            border: 'none',
-            borderRadius: 8,
-            fontWeight: 600,
-            cursor: 'pointer',
-            fontSize: '1rem',
-          }}
-        >
-          다음 카드 →
+        <button type="button" onClick={handleNext} style={getButtonStyle(theme.color.primary)}>
+          Next card →
         </button>
       </div>
 
       <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center' }}>
-        <Link to="/study/category" style={{ ...linkButtonStyle, background: '#64748b' }}>
+        <Link to="/study/category" style={getLinkStyle(theme.color.neutral)}>
           ← Back to category selection
         </Link>
       </div>
-    </main>
+    </PageLayout>
   )
 }

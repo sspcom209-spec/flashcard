@@ -1,3 +1,4 @@
+/** Single flashcard: category, Spanish/English pair, and quiz options for multiple-choice. */
 export type Flashcard = {
   category: string
   spanish: string
@@ -8,6 +9,7 @@ export type Flashcard = {
   }
 }
 
+/** All category slugs used for routing and filtering cards. */
 export const CATEGORIES = ['animals', 'food', 'verbs'] as const
 export type Category = (typeof CATEGORIES)[number]
 
@@ -125,6 +127,7 @@ export const flashcards: Flashcard[] = [
   },
 ]
 
+/** Returns all flashcards for a given category (e.g. study session or quiz). */
 export function getCardsByCategory(category: Category): Flashcard[] {
   return flashcards.filter((c) => c.category === category)
 }

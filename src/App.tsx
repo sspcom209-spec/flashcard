@@ -5,6 +5,7 @@ import StatsPage from './pages/StatsPage'
 import StudySessionPage from './pages/StudySessionPage'
 import PlaceholderSessionPage from './pages/PlaceholderSessionPage'
 
+/** Root app: defines routes for Home, Study/Quiz category & session, and Stats. */
 function App() {
   return (
     <Routes>

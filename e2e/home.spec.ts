@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Home Page', () => {
-  test('shows welcome message and app title', async ({ page }) => {
+  test('shows intro message and app title', async ({ page }) => {
     await page.goto('/')
     await expect(page.getByRole('heading', { name: 'Spanish Flashcards' })).toBeVisible()
-    await expect(page.getByText('Welcome! Choose how you want to practice.')).toBeVisible()
+    await expect(page.getByText('Choose how you want to practice.')).toBeVisible()
   })
 
   test('has Study Mode link that navigates to category selection for study', async ({ page }) => {
