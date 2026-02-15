@@ -51,3 +51,5 @@ playwright-report/
 blob-report/
 .playwright/
 playwright/.cache/
+
+.vercel
