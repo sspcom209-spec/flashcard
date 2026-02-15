@@ -26,7 +26,7 @@ pnpm-debug.log*
 .vscode/*
 !.vscode/extensions.json
 .idea
-.cursor/mcp.json
+.cursor/
 *.suo
 *.ntvs*
 *.njsproj
